@@ -23,10 +23,7 @@ public class Milliseconds {
         remainder = ms % MINUTES_TO_MS;
         long seconds = remainder / SECONDS_TO_MS;
 
-        System.out.println("Days - " + days);
-        System.out.println("Hours - " + hours);
-        System.out.println("Minutes - " + minutes);
-        System.out.println("Seconds - " + seconds);
+        System.out.println(days + " days " + hours + ":" + minutes + ":" + seconds + " hours");
     }
 
 }
