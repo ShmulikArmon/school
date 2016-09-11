@@ -150,6 +150,7 @@ public class Trip {
         if(_departureDate.getMonth() == 7 || _departureDate.getMonth() == 8){
             price *= 1.2;
         }
+        return price;
     }
 
     @Override
