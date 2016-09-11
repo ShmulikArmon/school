@@ -117,6 +117,46 @@ public class Trip {
         return _returningDate.equals(date);
     }
 
+    public boolean overlap(Trip trip)
+    {
+        return trip.getDepartureDate().after(_departureDate) && trip.getDepartureDate().before(_returningDate)
+                || trip.getReturningDate().after((_departureDate)) && trip.getReturningDate().before(_returningDate)
+                || _departureDate.after(trip.getDepartureDate()) && _departureDate.before(trip.getReturningDate())
+                || _returningDate.after(trip.getDepartureDate()) && _returningDate.before(trip.getReturningDate());
+    }
+
+    public int tripDuration()
+    {
+        return _returningDate.difference(_departureDate);
+    }
+
+    public boolean isLoaded()
+    {
+        return tripDuration() > _noOfCountries;
+    }
+
+    public int howManyCars()
+    {
+        int noOfCars = _noOfTravellers / 10;
+        if(_noOfTravellers % 10 != 0){
+            noOfCars += 1;
+        }
+        return noOfCars;
+    }
+
+    public int calculatePrice()
+    {
+        int price = _noOfTravellers * tripDuration() * PRICE_PER_DAY + _noOfCountries * PRICE_PER_COUNTRY;
+        if(_departureDate.getMonth() == 7 || _departureDate.getMonth() == 8){
+            price *= 1.2;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TRIP: " + _guideName + " | " + _departureDate + " - " + _returningDate + " | " + _noOfCountries + " | " + _noOfTravellers;
+    }
+
     private boolean isValidNoOfCountries(int noOfCountries)
     {
         return noOfCountries > 0 && noOfCountries <= 10;

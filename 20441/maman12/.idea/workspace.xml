@@ -83,7 +83,7 @@
       <file leaf-file-name="Trip.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Trip.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="19" selection-start="20" selection-end="20" vertical-scroll-proportion="0.024916943" vertical-offset="0" max-vertical-offset="2025">
+            <state line="150" column="25" selection-start="4683" selection-end="4683" vertical-scroll-proportion="3.820034" vertical-offset="0" max-vertical-offset="2625">
               <folding>
                 <element signature="e#1836#1837#0" expanded="true" />
                 <element signature="e#1869#1870#0" expanded="true" />
@@ -418,12 +418,12 @@
       <created>1473511280392</created>
       <updated>1473511280392</updated>
       <workItem from="1473511283982" duration="831000" />
-      <workItem from="1473512135385" duration="5669000" />
+      <workItem from="1473512135385" duration="7285000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6500000" />
+    <option name="totallyTimeSpent" value="8116000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="720" extended-state="6" />
@@ -506,7 +506,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Trip.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="19" selection-start="20" selection-end="20" vertical-scroll-proportion="0.024916943" vertical-offset="0" max-vertical-offset="2025">
+        <state line="150" column="25" selection-start="4683" selection-end="4683" vertical-scroll-proportion="3.820034" vertical-offset="0" max-vertical-offset="2625">
           <folding>
             <element signature="e#1836#1837#0" expanded="true" />
             <element signature="e#1869#1870#0" expanded="true" />
