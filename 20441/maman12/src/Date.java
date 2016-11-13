@@ -136,11 +136,22 @@ public class Date {
         return date.getYear() < _year || date.getMonth() < _month || date.getDay() < _day;
     }
 
+    /**
+     * returns true if the date in this instance comes after the given date.
+     * @param date the date to compare to.
+     * @return true if the date in this instance comes after the given date. false if not (equal or before).
+     */
     public boolean after(Date date)
     {
         return !before(date) && !equals(date);
     }
 
+    /**
+     * returns the difference between the date represented by this instance
+     * to another date instance in milliseconds
+     * @param date
+     * @return
+     */
     public int difference(Date date){
         int diff = calculateDate(_day,_month,_year) - calculateDate(date.getDay(),date.getMonth(),date.getYear());
         if(diff < 0){
@@ -149,31 +160,55 @@ public class Date {
         return diff;
     }
 
+    /**
+     * returns a string representation of the Date class which is "day/month/year"
+     * @return a string representation of the Date class which is "day/month/year"
+     */
     @Override
     public String toString() {
         return _day + " / " + _month + " / " + _year;
     }
 
+    /**
+     * returns true if the date given in day, month and year are valid. This is according to the definitions
+     * given in the assignment.
+     * @param day the day of the date to check.
+     * @param month the day of the date to check.
+     * @param year the day of the date to check.
+     * @return true if the date given in day, month and year are valid.
+     */
     private boolean isValidDate(int day, int month, int year)
     {
         return year >= MIN_YEAR && year <= MAX_YEAR && month >= JANUARY && month <= DECEMBER && day >= MIN_NUM_OF_DAYS && day <= calcDaysInMonth(month,year);
     }
 
+    /**
+     * returns the number of days in a certain month.
+     * @param month the month for which we want to calculate the days (months have different number of days)
+     * @param year the month for which we want to calculate the days (leap years affect the number of days)
+     * @return the number of days in a certain month.
+     */
     private int calcDaysInMonth(int month, int year)
     {
-        int daysInMonth = 31;
+        //if the month is one of these four, we know the number of days is 30.
         if(month == APRIL || month == JUNE || month == SEPTEMBER || month == NOVEMBER){
-            daysInMonth = 30;
+            return 30;
         }
-        if(month == FEBRUARY){
-            if(year % LEAP_YEAR_DIVIDER == 0){
-                daysInMonth = 29;
+        else {
+            //if the month is February, we need to check if its leap year and return days accordingly.
+            if(month == FEBRUARY){
+                if(year % LEAP_YEAR_DIVIDER == 0){
+                    return 29;
+                }
+                else {
+                    return 28;
+                }
             }
             else {
-                daysInMonth = 28;
+                //if it is none of the above options, we know the number of days is 31.
+                return 31;
             }
         }
-        return daysInMonth;
     }
 
     private int calculateDate(int day, int month, int year)
