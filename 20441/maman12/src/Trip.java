@@ -210,16 +210,28 @@ public class Trip {
                 || _retDate.after(trip.getDepartureDate()) && _retDate.before(trip.getReturningDate());
     }
 
+    /**
+     * calculates the number of days of the trip
+     * @return the number of days of the trip
+     */
     public int tripDuration()
     {
         return _retDate.difference(_depDate);
     }
 
+    /**
+     * check if trip is loaded
+     * @return true if the number of countries to visit is greater than the trip duration - else return false
+     */
     public boolean isLoaded()
     {
         return tripDuration() > _noOfCountries;
     }
 
+    /**
+     * calculates the minimum number of buses needed for the trip
+     * @return the number of buses needed for the trip
+     */
     public int howManyCars()
     {
         int noOfCars = _noOfTravellers / 10;
@@ -229,11 +241,35 @@ public class Trip {
         return noOfCars;
     }
 
+    /**
+     * calculates how many weekends occur during the trip
+     * @return the number of weekends occurring during the trip
+     */
     public int howManyWeekends()
     {
-        
-        return 0;
+        //get the departure day in int representation as required in date. If it is not saturday
+        //simply add to the duration of trip in days and divide by 7 (integers dividing will result in the
+        //correct number). if it is saturday we add 1 more to the end result.
+        int depDay = _depDate.dayInWeek();
+        int result = (depDay + tripDuration()) / 7;
+        if(depDay == 0){
+            result++;
+        }
+        return result;
+    }
 
+    /**
+     * calculates the date of first weekend of the trip
+     * @return the date of the first weekend of the trip or null if there is no weekend on the trip
+     */
+    public Date firstWeekend()
+    {
+        if(howManyWeekends() > 0){
+            int a = 7 - _depDate.dayInWeek();
+            return new Date(_depDate.getDay()+a,_depDate.getMonth(),_depDate.getYear());
+        } else {
+            return null;
+        }
     }
 
     /**

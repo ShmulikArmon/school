@@ -133,7 +133,7 @@ public class Date {
      */
     public boolean before(Date date)
     {
-        return date.getYear() < _year || date.getMonth() < _month || date.getDay() < _day;
+        return _year < date.getYear() ||  _month < date.getMonth() || _day < date.getDay();
     }
 
     /**
