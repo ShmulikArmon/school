@@ -26,10 +26,10 @@ public class Date {
     private int _year;
 
     /**
-     * takes in a day, month and year. If the date input is not valid, the default values are set.
-     * @param day the day of the date. default value is 1
-     * @param month the moth of the date. default value is 1
-     * @param year the year of the date. default value is 2000
+     * creates a new Date object if the date is valid, otherwise creates the date 1/1/2000
+     * @param day the day in the month(1-31)
+     * @param month the month in the year(1-12)
+     * @param year the year ( 4 digits)
      */
     public Date(int day, int month, int year)
     {
@@ -46,7 +46,7 @@ public class Date {
     }
 
     /**
-     *  copies an existing instance of Date.
+     *  copy constructor
      * @param date the date that should be copied
      */
     public Date(Date date)
@@ -57,8 +57,8 @@ public class Date {
     }
 
     /**
-     * returns the day of the date.
-     * @return the day of the date.
+     * gets the Day
+     * @return the day
      */
     public int getDay()
     {
@@ -66,8 +66,8 @@ public class Date {
     }
 
     /**
-     * returns the month of the date.
-     * @return the month of the date.
+     * gets the month
+     * @return the month
      */
     public int getMonth()
     {
@@ -75,8 +75,8 @@ public class Date {
     }
 
     /**
-     * returns the year of the date.
-     * @return the year of the date.
+     * gets the year
+     * @return the year
      */
     public int getYear()
     {
@@ -84,8 +84,8 @@ public class Date {
     }
 
     /**
-     * sets the day of the date. if day is not valid, former value is kept.
-     * @param day the day of the date. between 1 and the number of days in that month.
+     * sets the day (only if date remains valid)
+     * @param day the day value to be set
      */
     public void setDay(int day)
     {
@@ -95,8 +95,8 @@ public class Date {
     }
 
     /**
-     * sets the month of the date. if month is not valid, former value is kept.
-     * @param month the month of the date. between 1 and 12.
+     * set the month (only if date remains valid)
+     * @param month the month value to be set
      */
     public void setMonth(int month)
     {
@@ -106,8 +106,8 @@ public class Date {
     }
 
     /**
-     * sets the year of the date. if year is not valid, former value is kept.
-     * @param year the year of the date. between 1000 and 9999.
+     * sets the year (only if date remains valid)
+     * @param year the year value to be set
      */
     public void setYear(int year)
     {
@@ -117,9 +117,9 @@ public class Date {
     }
 
     /**
-     * returns true if this instance of Date to the give instance.
-     * @param date the instance of Date to compare to.
-     * @return true if this instance of Date to the give instance.
+     * check if 2 dates are the same
+     * @param date the date to compare this date to
+     * @return true if the dates are the same
      */
     public boolean equals(Date date)
     {
@@ -127,9 +127,9 @@ public class Date {
     }
 
     /**
-     * returns true the given date is before this instance.
-     * @param date
-     * @return
+     * check if this date is before other date
+     * @param date the date to compare to.
+     * @return true if this date is before other date
      */
     public boolean before(Date date)
     {
@@ -137,9 +137,9 @@ public class Date {
     }
 
     /**
-     * returns true if the date in this instance comes after the given date.
+     * check if this date is after other date
      * @param date the date to compare to.
-     * @return true if the date in this instance comes after the given date. false if not (equal or before).
+     * @return if this date is after other date
      */
     public boolean after(Date date)
     {
@@ -147,10 +147,9 @@ public class Date {
     }
 
     /**
-     * returns the difference between the date represented by this instance
-     * to another date instance in milliseconds
-     * @param date
-     * @return
+     * calculates the difference in days between two dates
+     * @param date the date to calculate the difference between
+     * @return the number of days between the dates
      */
     public int difference(Date date){
         int diff = calculateDate(_day,_month,_year) - calculateDate(date.getDay(),date.getMonth(),date.getYear());
@@ -160,9 +159,24 @@ public class Date {
         return diff;
     }
 
+    public int dayInWeek()
+    {
+        int m;
+        if(_month < 3){
+            m=_month+12;
+        }
+        else {
+            m=_month;
+        }
+        int y = _year%100;
+        int c = _year/100;
+        return (_day + (26*(m+1))/10 + y + y/4 + c/4 - 2*c) % 7;
+
+    }
+
     /**
-     * returns a string representation of the Date class which is "day/month/year"
-     * @return a string representation of the Date class which is "day/month/year"
+     * returns a String that represents this date
+     * @return String that represents this date in the following format: day/month/year for example: 2/3/1998
      */
     @Override
     public String toString() {
