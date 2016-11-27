@@ -159,6 +159,10 @@ public class Date {
         return diff;
     }
 
+    /**
+     * calculate the day of the week that this date occurs on 0-Saturday 1-Sunday 2-Monday etc.
+     * @return the day of the week that this date occurs on
+     */
     public int dayInWeek()
     {
         int m;

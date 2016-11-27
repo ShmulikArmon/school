@@ -9,6 +9,7 @@ public class Trip {
     private static final int DEFAULT_YEAR = 2000;
     private static final int PRICE_PER_DAY = 250;
     private static final int PRICE_PER_COUNTRY = 100;
+    private static final int PRICE_ADDITION_FOR_SAT = 100;
 
     private String _name;
     private int _noOfCountries;
@@ -278,7 +279,8 @@ public class Trip {
      */
     public int calculatePrice()
     {
-        int price = _noOfTravellers * tripDuration() * PRICE_PER_DAY + _noOfCountries * PRICE_PER_COUNTRY;
+        int price = _noOfTravellers * tripDuration() * PRICE_PER_DAY + _noOfCountries * PRICE_PER_COUNTRY +
+                howManyWeekends() * PRICE_ADDITION_FOR_SAT;
         if(_depDate.getMonth() == 7 || _depDate.getMonth() == 8){
             price *= 1.2;
         }
