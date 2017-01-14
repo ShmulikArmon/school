@@ -4,21 +4,21 @@
 public class Date {
 
     //constant values
-    private static final int LEAP_YEAR_DIVIDER = 4;
-    private static final int JANUARY = 1;
-    private static final int FEBRUARY = 2;
-    private static final int MARCH = 3;
-    private static final int APRIL = 4;
-    private static final int JUNE = 6;
-    private static final int SEPTEMBER = 9;
-    private static final int NOVEMBER = 11;
-    private static final int DECEMBER = 12;
-    private static final int DEFAULT_YEAR = 2000;
-    private static final int DEFAULT_MONTH = 1;
-    private static final int DEFAULT_DAY = 1;
-    private static final int MIN_NUM_OF_DAYS = 1;
-    private static final int MIN_YEAR = 1000;
-    private static final int MAX_YEAR = 9999;
+    private final int LEAP_YEAR_DIVIDER = 4;
+    private final int JANUARY = 1;
+    private final int FEBRUARY = 2;
+    private final int MARCH = 3;
+    private final int APRIL = 4;
+    private final int JUNE = 6;
+    private final int SEPTEMBER = 9;
+    private final int NOVEMBER = 11;
+    private final int DECEMBER = 12;
+    private final int DEFAULT_YEAR = 2000;
+    private final int DEFAULT_MONTH = 1;
+    private final int DEFAULT_DAY = 1;
+    private final int MIN_NUM_OF_DAYS = 1;
+    private final int MIN_YEAR = 1000;
+    private final int MAX_YEAR = 9999;
 
     //private variables
     private int _day;
@@ -133,7 +133,23 @@ public class Date {
      */
     public boolean before(Date date)
     {
-        return _year < date.getYear() ||  _month < date.getMonth() || _day < date.getDay();
+        //this date comes before the other date if -
+        //1. this date's year is smaller than the other ones year
+        if(_year < date.getYear()){
+            return true;
+        }
+        //2. the dates have the same year but this dates month is smaller than the other ones month
+        else if(_year == date.getYear() && _month < date.getMonth()){
+            return true;
+        }
+        //3. the dates have the same year and month but this dates day is smaller than the other ones day
+        else if(_year == date.getYear() && _month == date.getMonth() && _day < date.getDay()){
+            return true;
+        }
+        //4. if none of these are true, this date does not come before the other date
+        else {
+            return false;
+        }
     }
 
     /**
@@ -143,6 +159,7 @@ public class Date {
      */
     public boolean after(Date date)
     {
+        //if date does not come before the other date and is not equal to it, it must be after it.
         return !before(date) && !equals(date);
     }
 
@@ -152,6 +169,8 @@ public class Date {
      * @return the number of days between the dates
      */
     public int difference(Date date){
+        //we use a private method to calculate the number of days since Jan 1 1970 for this and the other date and
+        //subtract, and if the number is negative we multiply by 1 negative to get a positive value (absolute).
         int diff = calculateDate(_day,_month,_year) - calculateDate(date.getDay(),date.getMonth(),date.getYear());
         if(diff < 0){
             diff *= -1;
@@ -165,6 +184,7 @@ public class Date {
      */
     public int dayInWeek()
     {
+        //we implement the forumla in the requirement using the same variable names suggested there. (lowercase)
         int m;
         if(_month < 3){
             m=_month+12;

@@ -84,7 +84,7 @@ public class IsraelTour {
         int total = 0;
         if(_noOfTrips > 0){
             for(int i = 0; i < _noOfTrips; i++){
-                total += _data[i].getNoOfTravelers();
+                total += _data[i].getNoOfTravellers();
             }
         }
         return total;

@@ -15,7 +15,7 @@ public class TripTester
         System.out.println("\n2. Testing accessors and mutators:");
         System.out.println("Name of guide is: " + trip1.getGuideName());
         System.out.println("No of countries to visit is: " + trip1.getNoOfCountries());
-        System.out.println("No of travellers : " + trip1.getNoOfTravelers());
+        System.out.println("No of travellers : " + trip1.getNoOfTravellers());
         System.out.println("Trip 1 departure date is: " + trip1.getDepartureDate());
         System.out.println("Trip 1 returning date is: " + trip1.getReturningDate());
         String s2=new String("Arik Levy");
@@ -58,14 +58,14 @@ public class TripTester
         System.out.println("\n9. Testing howManyCars method:");
         System.out.println("Number of cars needed to take all travellers in trip1 is: " + trip1.howManyCars());
         System.out.println("\n10. Testing howManyWeekends method:");
-//        System.out.println("Number of weekends during  trip1 are: " + trip1.howManyWeekends());
+        System.out.println("Number of weekends during  trip1 are: " + trip1.howManyWeekends());
         System.out.println("\n11. Testing calculatePrice method:");
         System.out.println("The price of  trip1 is: " + trip1.calculatePrice());
         System.out.println("\n12. Testing firstWeekend method:");
-//        if(trip1.firstWeekend()==null)
-//           System.out.println("There is no weekend on the trip");
-//        else
-//           System.out.println("The first weekend of  trip1 is on : " + trip1.firstWeekend());
+        if(trip1.firstWeekend()==null)
+           System.out.println("There is no weekend on the trip");
+        else
+           System.out.println("The first weekend of  trip1 is on : " + trip1.firstWeekend());
         System.out.println("\n********** Test Trip - Finished **********\n");
 
     }

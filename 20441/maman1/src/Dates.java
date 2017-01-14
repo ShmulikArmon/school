@@ -5,21 +5,19 @@ import java.util.Scanner;
  * and will output the future date outcome.
  */
 public class Dates {
-
-    //constant values
-    private static final int MIN_NUM_OF_DAYS = 1;
-    private static final int MAX_NUM_OF_DAYS = 10;
-    private static final int LEAP_YEAR_DIVIDER = 4;
-    private static final int JANUARY = 1;
-    private static final int FEBRUARY = 2;
-    private static final int APRIL = 4;
-    private static final int JUNE = 6;
-    private static final int SEPTEMBER = 9;
-    private static final int NOVEMBER = 11;
-    private static final int DECEMBER = 12;
-
     //begin program
     public static void main(String[] args){
+        //constant values
+        final int MIN_NUM_OF_DAYS = 1;
+        final int MAX_NUM_OF_DAYS = 10;
+        final int LEAP_YEAR_DIVIDER = 4;
+        final int JANUARY = 1;
+        final int FEBRUARY = 2;
+        final int APRIL = 4;
+        final int JUNE = 6;
+        final int SEPTEMBER = 9;
+        final int NOVEMBER = 11;
+        final int DECEMBER = 12;
         //we ask for the 3 integers from the users and take them in with a java Scanner class instance
         System.out.println("Please enter 3 integers to represent a valid date:");
         Scanner scan = new Scanner(System.in);
@@ -54,10 +52,11 @@ public class Dates {
                 System.out.println("Please enter an integer to represent the number of days:");
                 int num = scan.nextInt();
                 //we check again if the user has input a legal integer, if not we print and stop.
-                if(num < MIN_NUM_OF_DAYS || num > MAX_NUM_OF_DAYS){
+                if(num < MIN_NUM_OF_DAYS) {
+                    System.out.print("The number of days must be positive.");
+                } else if(num > MAX_NUM_OF_DAYS) {
                     System.out.println("The number of days must be between " + MIN_NUM_OF_DAYS + " and " + MAX_NUM_OF_DAYS + ".");
-                }
-                else {
+                } else {
                     //we print out the original date, calculate the future date considering how many days, months and years have past, and finally print out the outcome date.
                     System.out.println("The original data is " + day + "/" + month + "/" + year + ".");
                     day += num;
