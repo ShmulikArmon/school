@@ -53,11 +53,18 @@ public class Ex14 {
 
     public static int what3(int a[])
     {
-        int result = 0;
-
-
-
-        return result;
+        //[3] [-2] [4] [1] [2] [90] [5]
+        int totalSum = f(a,0,a.length);
+        for(int i = 0; i < a.length; i++){
+            int tempSum = totalSum;
+            for(int j = i; j < a.length; j++){
+                tempSum -= a[j];
+                if(tempSum % 3 == 0){
+                    return j-i+1;
+                }
+            }
+        }
+        return 0;
     }
 
     public static int what2(int a[])
@@ -105,9 +112,41 @@ public class Ex14 {
 //        }
     }
 
+    public static void zeroDistance(int a[])
+    {
+        //[0][1][1][1][0][1][1][1][1][1][1]
+
+        int begin = 0;
+        int count = 0;
+
+        for(int i = 0; i < a.length; i++){
+            if(a[i] == 0){
+                if(count > 2){
+                    boolean zugi = (count % 2 == 0);
+                    int mid = begin + (zugi ? (count/2) : (count/2)+1);
+                    int addition = 1;
+                    for(int j = begin+2; j < i-1; j++){
+                        a[j] += addition;
+                        if(j <= mid) {
+                            addition++;
+                        }
+                        else {
+                            addition--;
+                        }
+                    }
+                }
+                count = 0;
+                begin = i;
+            }
+            else {
+                count++;
+            }
+        }
+    }
+
     public static void main(String[] args)
     {
-        int[] a = new int[21];
+        int[] a = new int[5];
         for(int i = 0; i < a.length; i++){
             a[i] = new Random().nextInt(50)-25;
             System.out.print(a[i] + ", ");
@@ -116,6 +155,17 @@ public class Ex14 {
         System.out.println("original output - " + what(a));
         System.out.println("new output - " + what2(a));
 
+
+
+        int b[] = new int[] {0,1,1,1,0,1,1,1,1,1,1,0,1,1,1};
+        for(int i = 0; i < b.length; i++){
+            System.out.print("["+b[i]+"]");
+        }
+        System.out.println();
+        zeroDistance(b);
+        for(int i = 0; i < b.length; i++){
+            System.out.print("["+b[i]+"]");
+        }
     }
 
 }
