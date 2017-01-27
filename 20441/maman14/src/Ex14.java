@@ -178,6 +178,14 @@ public class Ex14 {
         }
     }
 
+    /**
+     * Returns true if the second given string is a transformation of the first given string
+     * ("transformation of" - when a string contains all the originals string characters in the same order, but might
+     * have random extra copies of characters inserted as well.
+     * @param s the original string
+     * @param t the string to test for transformation
+     * @return true if t is a transformation of s, false if not.
+     */
     public static boolean isTrans(String s, String t)
     {
         if(s.length() == 0 || t.length() == 0){
@@ -220,6 +228,83 @@ public class Ex14 {
         }
     }
 
+    /**
+     * Returns true if an array has a subsequent subarray that matches to a given pattern array.
+     * To match to a pattern means that for each 0, there should be a 1 or 2 digit number,
+     * for each 1 there should be a 1 digit number, and for each 2 there should be a 2 digit number.
+     * @param a the given array to test for a match to the pattern
+     * @param pattern the given pattern to test against
+     * @return true if a has any matches to pattern, false if not.
+     */
+    public static boolean match(int[] a, int[] pattern)
+    {
+        //if one of the arrays are null there is no point to continue
+        if(a == null || pattern == null){
+            return false;
+        }
+        //also, if a is larger than pattern, it could not possibly match it
+        if(a.length < pattern.length){
+            return false;
+        }
+        //call internal recursive backtracking method match
+        return match(a,pattern,0,0);
+    }
+
+    /**
+     * Returns true if an array has a subsequent subarray that matches to a given pattern array.
+     * To match to a pattern means that for each 0, there should be a 1 or 2 digit number,
+     * for each 1 there should be a 1 digit number, and for each 2 there should be a 2 digit number.
+     * @param a the given array to test for a match to the pattern
+     * @param pattern the given pattern to test against
+     * @param i an index for a
+     * @param j and index for pattern
+     * @return true if a has any matches to pattern, false if not.
+     */
+    private static boolean match(int[] a, int[] pattern, int i, int j)
+    {
+        //if we have reached the end of the pattern array, it means we continued to its end without a mismatch.
+        if(j == pattern.length){
+            return true;
+        }
+        //if we have reached the end of a, it means we could not find a sub-array to match the pattern.
+        if(i == a.length){
+            return false;
+        }
+        //if the current number in index i matches the one in j, we advance both i and j. If they did not match, we
+        //advance i and pass j in its current value (we are only looking for
+        //consecutive matches).
+        if(matchPattern(a[i],pattern[j])){
+            return match(a,pattern,i+1,j+1);
+        }
+        else {
+            return match(a,pattern,i+1,j);
+        }
+
+    }
+
+    /**
+     * Returns true if i matches j
+     * A match means - if j is 0, i is single or double digit, if j is 1 i is single digit, if j is 2 i is double digit.
+     * @param i the number to check for match
+     * @param j the pattern number to check for match
+     * @return true if i matches j
+     */
+    private static boolean matchPattern(int i, int j)
+    {
+        if(j == 0 && i >=0 && i <= 99){
+            return true;
+        }
+        else if (j == 1 && i >=0 && i <= 9){
+            return true;
+        }
+        else if (j == 2 && i >= 10 && i <= 99){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public static void main(String[] args)
     {
         int[] a = new int[10];
@@ -247,6 +332,25 @@ public class Ex14 {
         String str1 = "abbc";
         String str2 = "aabbcccccccccccccd";
         System.out.println("str1 = " + str1 + ", str2 = " + str2 + ", isTrans? " + isTrans(str1,str2));
+        System.out.println();
+
+        int[] d = new int[5];
+        int[] pat = new int[5];
+
+        for(int i = 0; i < d.length; i++){
+            d[i] = new Random().nextInt(21);
+            pat[i] = new Random().nextInt(3);
+        }
+
+        for(int i = 0; i < d.length; i++){
+            System.out.print("["+d[i]+"]");
+        }
+        System.out.println();
+        for(int i = 0; i < pat.length; i++){
+            System.out.print("["+pat[i]+"]");
+        }
+        System.out.println();
+        System.out.println("match = " + match(d,pat));
     }
 
 }
