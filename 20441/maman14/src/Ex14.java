@@ -6,105 +6,85 @@ import java.util.Random;
  */
 public class Ex14 {
 
-    /**
-     * Returns the total sum of integers from the low index to the high index in the given array
-     * @param a the array to calculate from
-     * @param low the lower index to calculate from
-     * @param high the higher index to calculate from
-     * @return the total sum of integers from the low index to the high index in the given array
-     */
-    private static int f(int[] a, int low, int high)
-    {
-        int res = 0;
-        for(int i = low; i <= high; i++){
-            res += a[i];
-        }
-        return res;
-    }
 
     /**
-     * Returns the largest number of integers in the array that can be summed up in to a number that can be divided by 3
-     * without a remainder. Original time complexity was O(n^2) since it ran through the array from within running in the
-     * array.
+     * Returns the largest continuous number of integers in the array that can be summed up in to a number that can be divided by 3
+     * without a remainder.
+     * Original time complexity - O(N^2)
+     * Time complexity - O(N)
      * @param a the array to calculate from
      * @return the largest number of integers in the array that can be summed up in to a number that can be divided by 3
      * without a remainder.
      */
     public static int what(int a[])
     {
-        for(int numOfSlots = a.length; numOfSlots > 0; numOfSlots--){ //worst case O(n)
-            for(int i = 0; i <= a.length-numOfSlots; i++){ //n+(n-1)+(n-2)...
-                int b = f(a,i,i+numOfSlots-1);
-                if(b % 3 == 0){
-                    return numOfSlots;
-                }
-            }
-        }
-        return 0;
-    }
+        //we use prefix sums (i had to research it online thats where i got the term) in the following way
+        int f1 = -1, f2 = -1, l0 = -1, l1 = -1, l2 = -1, total = 0, d0 = 0, d1 = 0, d2 = 0;
 
-    public static int betterWhat(int a[])
-    {
-        int f0 = -1, f1 = -1, f2 = -1, l0, l1, l2, d0 = -1, d1 = -1, d2 = -1, total = 0;
-
+        //we go through the array, in each step we add the current array slot integer to a total
+        //we modulo the total by 3, and take that modulo remainder as an absolute value using a function we created.
+        //we then see if the value of the absolute remainder is 0,1 or 2. And we mark the first and last 0,1,2 by
+        //saving their index.
         for(int i = 0; i < a.length; i++){
-            total += abs(a[i]);
+            total += a[i];
             int totalMod = total % 3;
-            switch (totalMod) {
+            switch (abs(totalMod)) {
                 case 0:
-                    if(f0 == -1){
-                        f0 = i;
-                    }
+                    l0 = i+1;
                     break;
                 case 1:
                     if(f1 == -1){
-                        f1 = i;
+                        f1 = i+1;
                     }
+                    else
+                        l1 = i+1;
                     break;
                 case 2:
                     if(f2 == -1){
-                        f2 = i;
+                        f2 = i+1;
                     }
+                    else
+                        l2 = i+1;
                     break;
                 default:
                     System.out.println("something went wrong, mod is not in range.");
                     break;
             }
         }
-
-        total = 0;
-
-        for(int i = a.length-1; i >= 0; i--){
-            total += abs(a[i]);
-            int totalMod = total % 3;
-            switch (totalMod) {
-                case 0:
-                    if(d0 == -1){
-                        d0 = abs(i - f0);
-                    }
-                    break;
-                case 1:
-                    if(d1 == -1){
-                        d1 = abs(i - f1);
-                    }
-                    break;
-                case 2:
-                    if(d2 == -1){
-                        d2 = abs(i - f2);
-                    }
-                    break;
-                default:
-                    System.out.println("something went wrong, mod is not in range.");
-            }
+        //if we could not find any of these values (except the first 0 which will always be in location 0 since the initial
+        //total is always zero before we go through the array), we consider the length between both indexes as 0.
+        if(l0 != -1){
+            d0 = l0;
         }
+        if(f1 != -1 && l1 != -1){
+            d1 = l1-f1;
+        }
+        if(f2 != -1 && l2 != -1){
+            d2 = l2-f2;
+        }
+
+        //finally, we take all the calculated distances, and return the maximum one, also using a special function we
+        //created for this.
         return max(d0,d1,d2);
     }
 
+    /**
+     * returns the absolute value of an integer
+     * @param a the integer to calculate absolute value for
+     * @return the absolute value
+     */
     private static int abs(int a)
     {
         return a < 0 ? -a : a;
     }
 
+    /**
+     * determines the highest value out of 3 integers
+     * @param a the first integer
+     * @param b the second integer
+     * @param c the third integer
+     * @return the highest value out of 3 integers
+     */
     private static int max(int a, int b, int c)
     {
         if(a > b && a > c){
@@ -311,55 +291,4 @@ public class Ex14 {
             return false;
         }
     }
-
-    public static void main(String[] args)
-    {
-        for(int f = 0; f < 10; f++){
-            int[] a = new int[10];
-            for(int i = 0; i < a.length; i++){
-                a[i] = new Random().nextInt(50)-25;
-                System.out.print("["+a[i]+"]");
-            }
-            System.out.println();
-            System.out.println("what  - " + what(a));
-            System.out.println("betterWhat  - " + betterWhat(a));
-        }
-
-
-//
-//        int b[] = new int[] {1,1,1,0,1,1,1,1,1,0,1,1,1};
-//        int c[] = new int[] {1,1,1,0,1,1,1,1,1,0,1,1,1};
-//        for(int i = 0; i < b.length; i++){
-//            System.out.print("["+b[i]+"]");
-//        }
-//        System.out.println();
-//        zeroDistance(b);
-//        for(int i = 0; i < b.length; i++){
-//            System.out.print("["+b[i]+"]");
-//        }
-//        System.out.println();
-//        String str1 = "abbc";
-//        String str2 = "aabbcccccccccccccd";
-//        System.out.println("str1 = " + str1 + ", str2 = " + str2 + ", isTrans? " + isTrans(str1,str2));
-//        System.out.println();
-//
-//        int[] d = new int[5];
-//        int[] pat = new int[5];
-//
-//        for(int i = 0; i < d.length; i++){
-//            d[i] = new Random().nextInt(21);
-//            pat[i] = new Random().nextInt(3);
-//        }
-//
-//        for(int i = 0; i < d.length; i++){
-//            System.out.print("["+d[i]+"]");
-//        }
-//        System.out.println();
-//        for(int i = 0; i < pat.length; i++){
-//            System.out.print("["+pat[i]+"]");
-//        }
-//        System.out.println();
-//        System.out.println("match = " + match(d,pat));
-    }
-
 }
