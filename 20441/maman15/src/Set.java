@@ -63,6 +63,7 @@ public class Set {
                 else if(curr.getValue() == num){
                     return true;
                 }
+                curr = curr.getNext();
             }
         }
         return false;
@@ -96,7 +97,7 @@ public class Set {
                     if(x == curr.getValue()){
                         return;
                     }
-                    if(x > curr.getValue()){
+                    if(x > curr.getValue() && curr.getNext().getValue() > x){
                         IntNode nextNode = curr.getNext();
                         curr.setNext(new IntNode(x,nextNode));
                         return;
@@ -128,6 +129,38 @@ public class Set {
         }
     }
 
+    public Set intersection(Set other)
+    {
+        Set set = new Set();
+        IntNode curr = _head;
+        while(curr != null){
+            if(other.isMemeber(curr.getValue())){
+                set.addToSet(curr.getValue());
+            }
+            curr = curr.getNext();
+        } 
+        return set;
+    }
+
+    public Set union(Set other)
+    {
+        Set set  = new Set();
+        return set;
+    }
+
+    public Set difference(Set other)
+    {
+        Set set = new Set();
+        IntNode curr = _head;
+        while(curr != null){
+            if(other.isMemeber(curr.getValue())){
+                set.removeFromSet(curr.getValue());
+            }
+            curr = curr.getNext();
+        }
+        return set;
+    }
+
     @Override
     public String toString() {
         if(_head == null){
@@ -152,7 +185,20 @@ public class Set {
         A.addToSet(3);
         A.addToSet(7);
         A.addToSet(5);
-        System.out.println(A);
+        System.out.println("A = " + A);
+        A.removeFromSet(3);
+        System.out.println("A = " + A);
+        A.addToSet(9);
+        System.out.println("A = " + A);
+        Set B = new Set();
+        B.addToSet(7);
+        B.addToSet(9);
+        B.addToSet(23);
+        System.out.println("B = " + B);
+        System.out.println("A intersection B = " + A.intersection(B));
+
+
+
     }
 
 }
