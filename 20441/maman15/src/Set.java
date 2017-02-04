@@ -153,8 +153,8 @@ public class Set {
         Set set = new Set();
         IntNode curr = _head;
         while(curr != null){
-            if(other.isMemeber(curr.getValue())){
-                set.removeFromSet(curr.getValue());
+            if(!other.isMemeber(curr.getValue())){
+                set.addToSet(curr.getValue());
             }
             curr = curr.getNext();
         }
@@ -196,6 +196,8 @@ public class Set {
         B.addToSet(23);
         System.out.println("B = " + B);
         System.out.println("A intersection B = " + A.intersection(B));
+        System.out.println("A difference B = " + A.difference(B));
+
 
 
 
