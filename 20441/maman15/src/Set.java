@@ -2,14 +2,7 @@
 public class Set {
 
     private IntNode _head;
-    private IntNode _tail; //?
-
-    private int _numOfElements; //??
-
-    public Set()
-    {
-
-    }
+    private int _numOfElements;
 
     private boolean isUnevenAndPositive(int num)
     {
@@ -23,25 +16,17 @@ public class Set {
 
     public int numOfElements()
     {
-        if(isEmpty()){
-            return 0;
-        }
-        return numOfElement(_head);
-    }
-
-    private int numOfElement(IntNode node)
-    {
-        if(node == null){
-            return 0;
-        }
-        return 1 + numOfElement(_head.getNext());
+        return _numOfElements;
     }
 
     public boolean equals(Set other){
+        if(other == null || _numOfElements != other.numOfElements()){
+            return false;
+        }
         IntNode curr = _head;
         IntNode otherCurr = other._head;
         while(curr != null){
-            if(otherCurr == null || curr.getValue() != otherCurr.getValue()){
+            if(curr.getValue() != otherCurr.getValue()){
                 return false;
             }
             else {
@@ -52,7 +37,7 @@ public class Set {
         return true;
     }
 
-    public boolean isMemeber(int num)
+    public boolean isMember(int num)
     {
         if(isUnevenAndPositive(num)){
             IntNode curr = _head;
@@ -90,6 +75,7 @@ public class Set {
         if(isUnevenAndPositive(x)){
             if(_head == null){
                 _head = new IntNode(x,null);
+                _numOfElements++;
             }
             else {
                 IntNode curr = _head;
@@ -100,11 +86,13 @@ public class Set {
                     if(x > curr.getValue() && curr.getNext().getValue() > x){
                         IntNode nextNode = curr.getNext();
                         curr.setNext(new IntNode(x,nextNode));
+                        _numOfElements++;
                         return;
                     }
                     curr = curr.getNext();
                 }
                 curr.setNext(new IntNode(x,null));
+                _numOfElements++;
             }
         }
     }
@@ -115,6 +103,7 @@ public class Set {
             IntNode curr = _head;
             if(_head.getValue() == x){
                 _head = curr.getNext();
+                _numOfElements--;
                 return;
             }
             while(curr.getNext() != null){
@@ -123,8 +112,10 @@ public class Set {
                 }
                 if(curr.getNext().getValue() == x){
                     curr.setNext(curr.getNext().getNext());
+                    _numOfElements--;
                     return;
                 }
+                curr = curr.getNext();
             }
         }
     }
@@ -134,7 +125,7 @@ public class Set {
         Set set = new Set();
         IntNode curr = _head;
         while(curr != null){
-            if(other.isMemeber(curr.getValue())){
+            if(other.isMember(curr.getValue())){
                 set.addToSet(curr.getValue());
             }
             curr = curr.getNext();
@@ -145,6 +136,49 @@ public class Set {
     public Set union(Set other)
     {
         Set set  = new Set();
+        IntNode curr = _head;
+        IntNode otherCurr = other._head;
+        IntNode setCurr = null;
+        while(curr != null && otherCurr != null){
+            int val;
+            if(curr.getValue() < otherCurr.getValue()){
+                val = curr.getValue();
+                curr = curr.getNext();
+            }
+            else {
+                val = otherCurr.getValue();
+                otherCurr = otherCurr.getNext();
+
+            }
+            if(setCurr == null){
+                set._head = new IntNode(val,null);
+                setCurr = set._head;
+                set._numOfElements = 1;
+            }
+            else {
+                if(setCurr.getValue() != val){
+                    setCurr.setNext(new IntNode(val,null));
+                    setCurr = setCurr.getNext();
+                    set._numOfElements++;
+                }
+            }
+        }
+        if(curr != null){
+            while(curr != null){
+                setCurr.setNext(new IntNode(curr.getValue(),null));
+                setCurr = setCurr.getNext();
+                curr = curr.getNext();
+                set._numOfElements++;
+            }
+        }
+        else if (otherCurr != null){
+            while (otherCurr != null){
+                setCurr.setNext(new IntNode(otherCurr.getValue(), null));
+                setCurr = setCurr.getNext();
+                otherCurr = otherCurr.getNext();
+                set._numOfElements++;
+            }
+        }
         return set;
     }
 
@@ -153,7 +187,7 @@ public class Set {
         Set set = new Set();
         IntNode curr = _head;
         while(curr != null){
-            if(!other.isMemeber(curr.getValue())){
+            if(!other.isMember(curr.getValue())){
                 set.addToSet(curr.getValue());
             }
             curr = curr.getNext();
@@ -186,21 +220,37 @@ public class Set {
         A.addToSet(7);
         A.addToSet(5);
         System.out.println("A = " + A);
+        System.out.println("A.numOfElements() = " + A.numOfElements());
         A.removeFromSet(3);
         System.out.println("A = " + A);
+        System.out.println("A.numOfElements() = " + A.numOfElements());
         A.addToSet(9);
         System.out.println("A = " + A);
+        System.out.println("A.numOfElements() = " + A.numOfElements());
         Set B = new Set();
         B.addToSet(7);
         B.addToSet(9);
         B.addToSet(23);
         System.out.println("B = " + B);
+        System.out.println("B.numOfElements() = " + B.numOfElements());
+        System.out.println("B.eqauls(A) = " + B.equals(A));
         System.out.println("A intersection B = " + A.intersection(B));
         System.out.println("A difference B = " + A.difference(B));
-
-
-
-
+        System.out.println("A union B = " + A.union(B));
+        Set C = new Set();
+        C.addToSet(1);
+        C.addToSet(5);
+        C.addToSet(7);
+        C.addToSet(9);
+        System.out.println("C = " + C);
+        System.out.println("C.numOfElements() = " + C.numOfElements());
+        System.out.println("C.eqauls(A) = " + C.equals(A));
+        C.removeFromSet(9);
+        System.out.println("C = " + C);
+        System.out.println("C.numOfElements() = " + C.numOfElements());
+        System.out.println("C.eqauls(A) = " + C.equals(A));
+        System.out.println("end.");
+        return;
     }
 
 }
